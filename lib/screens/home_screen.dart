@@ -6,7 +6,14 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: Column(children: [_RecipesCard(context), _RecipesCard(context)]),
+    );
+  }
+
+  Widget _RecipesCard(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
         width: MediaQuery.of(context).size.width,
         height: 125,
         child: Card(
@@ -15,6 +22,10 @@ class HomeScreen extends StatelessWidget {
               Container(
                 height: 125,
                 width: 100,
+                decoration: BoxDecoration(
+                  color: Colors.blue[200],
+                  borderRadius: BorderRadius.circular(12),
+                ),
                 child: ClipRRect(
                   child: Container(),
                   borderRadius: BorderRadius.circular(25),
@@ -22,10 +33,20 @@ class HomeScreen extends StatelessWidget {
               ),
               SizedBox(width: 26),
               Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text('Lasaña'),
-                  Text('Alison Menez'),
+                  Text(
+                    'Lasaña',
+                    style: TextStyle(fontSize: 16, fontFamily: 'Quicksand'),
+                  ),
+                  SizedBox(height: 4),
                   Container(height: 2, width: 75, color: Colors.blue[200]),
+                  Text(
+                    'Alison Menez',
+                    style: TextStyle(fontSize: 16, fontFamily: 'Quicksand'),
+                  ),
+                  SizedBox(height: 4),
                 ],
               ),
             ],
