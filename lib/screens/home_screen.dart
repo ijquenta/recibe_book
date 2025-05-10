@@ -11,12 +11,13 @@ class HomeScreen extends StatelessWidget {
             _RecipesCard(context),
           ]
       ),
+      // Boton de agregar receta flotante
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blue[200],
+        backgroundColor: Colors.blue,
         onPressed: () {
           _showBottom(context);
         },
-        child: Icon(Icons.add, color: Colors.white),
+        child: Icon(Icons.add_circle, color: Colors.white),
       ),
     );
   }
@@ -25,9 +26,10 @@ class HomeScreen extends StatelessWidget {
     return showModalBottomSheet(
       context: context,
       builder: (context) => Container(
+        // Ajustar el tamaño del contenedor
         width: MediaQuery.of(context).size.width,
         height: 500,
-        color: Colors.white,
+        color: Colors.black,
         child: RecipeForm(),
       ),
     );
@@ -90,42 +92,54 @@ class RecipeForm extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(8),
       child: Form(
-        // key: _formKey,
+        //key: _formKey,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(height: 5),
             Text(
-              'Add New Recipe',
-              style: TextStyle(color: Colors.blue[200], fontSize: 24),
+              'Add new recipe',
+              style: TextStyle(
+                fontSize: 24,
+                fontFamily: 'Quicksand',
+                fontWeight: FontWeight.bold,
+                color: Colors.blue,
+              ),
             ),
-            SizedBox(height: 16),
-            _buildTextField(label: 'Recipe Name'),
-            SizedBox(height: 16),
-            _buildTextField(label: 'Ingredients'),
-            SizedBox(height: 16),
-            _buildTextField(label: 'Steps'),
+            SizedBox(height: 20),
+            _buildTextField(
+              label: 'Name',
+              type: TextInputType.text,
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildTextField({required String label}) {
+  Widget _buildTextField({required String label, required TextInputType type}) {
     return TextFormField(
+      keyboardType: type,
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: TextStyle(fontFamily: 'Quicksand', color: Colors.blue[200]),
+        labelStyle: TextStyle(
+          fontSize: 16,
+          fontFamily: 'Quicksand',
+          color: Colors.blue,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colors.blue[200]!),
+          borderSide: BorderSide(
+            color: Colors.white,
+            width: 2,
+          ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colors.blue[200]!),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colors.blue[200]!),
+          borderSide: BorderSide(
+            color: Colors.blue,
+            width: 2,
+          ),
         ),
       ),
     );
