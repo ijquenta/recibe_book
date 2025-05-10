@@ -8,21 +8,26 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   Future<List<dynamic>> FetchRecipes() async {
-    final url = Uri.parse('http://localhost:5001/recipes');
+    final url = Uri.parse('http://10.0.2.2:5001/recipes');
     final response = await http.get(url);
     final data = jsonDecode(response.body);
-    print('Response body: $data');
     return data['recipes'];
   }
 
   @override
   Widget build(BuildContext context) {
-    FetchRecipes();
     return Scaffold(
-      body: Column(
-          children: <Widget> [
-            _RecipesCard(context),
-          ]
+      body: FutureBuilder <List<dynamic>>(
+          future: FetchRecipes(),
+          builder: (context, snapshot) {
+            final recipes = snapshot.data as List<dynamic> ?? [];
+            return ListView.builder(
+              itemCount: recipes.length,
+              itemBuilder: (context, index) {
+                return _RecipesCard(context, recipes[index]);
+              },
+            );
+          },
       ),
       // Boton de agregar receta flotante
       floatingActionButton: FloatingActionButton(
@@ -56,18 +61,18 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _RecipesCard(BuildContext context) {
+  Widget _RecipesCard(BuildContext context, dynamic recipe) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => RecipeDetail(
-              recipeName: 'Silpancho Cochabanbino',
-              recipeDescription: 'Delicious Bolivian dish with rice, potatoes, and meat.',
-              recipeImage: 'https://upload.wikimedia.org/wikipedia/commons/7/7e/Silpancho_cochalo.jpg',
-              recipeAuthor: 'Alison Menez',
-              recipeTime: '30 min',
+              recipeName: recipe['name'],
+              recipeDescription: recipe['description'],
+              recipeImage: recipe['url'],
+              recipeAuthor: recipe['author'],
+              recipeTime: recipe['time'],
             ),
           ),
         );
@@ -86,7 +91,7 @@ class HomeScreen extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.network(
-                        'https://upload.wikimedia.org/wikipedia/commons/7/7e/Silpancho_cochalo.jpg',
+                        recipe['url'],
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -99,7 +104,7 @@ class HomeScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        'Silpancho Cochabanbino',
+                        recipe['name'],
                         style: TextStyle(fontSize: 16, fontFamily: 'Quicksand',
                             fontWeight: FontWeight.bold),
                       ),
@@ -114,7 +119,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           SizedBox(width: 4),
                           Text(
-                            'Alison Menez',
+                            recipe['author'],
                             style: TextStyle(
                               fontSize: 13,
                               fontFamily: 'Quicksand',
@@ -134,7 +139,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           SizedBox(width: 4),
                           Text(
-                            '30 min',
+                            recipe['time'],
                             style: TextStyle(
                               fontSize: 13,
                               fontFamily: 'Quicksand',
