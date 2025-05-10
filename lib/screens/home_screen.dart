@@ -30,7 +30,15 @@ class HomeScreen extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         height: 500,
         color: Colors.black,
-        child: RecipeForm(),
+        child: SingleChildScrollView(
+          child: Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
+              child: RecipeForm(),
+          ),
+
+        ),
       ),
     );
   }
@@ -122,10 +130,19 @@ class RecipeForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // GlobalKey para el formulario
+    final _formKey = GlobalKey<FormState>();
+    final TextEditingController _nameController = TextEditingController();
+    final TextEditingController _descriptionController = TextEditingController();
+    final TextEditingController _authorController = TextEditingController();
+    final TextEditingController _timeController = TextEditingController();
+    final TextEditingController _imageUrlController = TextEditingController();
+
+
     return Padding(
       padding: EdgeInsets.all(8),
       child: Form(
-        //key: _formKey,
+        key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -141,21 +158,106 @@ class RecipeForm extends StatelessWidget {
             ),
             SizedBox(height: 20),
             _buildTextField(
+              controller: _nameController,
               label: 'Name',
               type: TextInputType.text,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a name';
+                }
+                return null;
+              }
             ),
             SizedBox(height: 10),
             _buildTextField(
+              maxLines: 2,
+              controller: _descriptionController,
               label: 'Description',
               type: TextInputType.multiline,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a description';
+                }
+                return null;
+              }
             ),
+            SizedBox(height: 10),
+            _buildTextField(
+              controller: _authorController,
+              label: 'Author',
+              type: TextInputType.multiline,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter an author';
+                }
+                return null;
+              }
+            ),
+            SizedBox(height: 10),
+            _buildTextField(
+              controller: _timeController,
+              label: 'Time',
+              type: TextInputType.number,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a time';
+                }
+                return null;
+              }
+            ),
+            SizedBox(height: 10),
+            _buildTextField(
+              controller: _imageUrlController,
+              label: 'Image URL',
+              type: TextInputType.url,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter an image URL';
+                }
+                return null;
+              }
+            ),
+            SizedBox(height: 20),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    // Cerrar el modal
+                    Navigator.pop(context);
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: Text(
+                  'Save',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: 'Quicksand',
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+
+              ),
+            )
           ],
         ),
       ),
     );
   }
 
-  Widget _buildTextField({required String label, required TextInputType type}) {
+  Widget _buildTextField( {
+    required String label,
+    required TextInputType type,
+    required TextEditingController controller,
+    required String? Function(String?)? validator,
+    int maxLines = 1,
+  }) {
     return TextFormField(
       keyboardType: type,
       decoration: InputDecoration(
@@ -180,6 +282,8 @@ class RecipeForm extends StatelessWidget {
           ),
         ),
       ),
+      validator: validator,
+      maxLines: maxLines,
     );
   }
 }
