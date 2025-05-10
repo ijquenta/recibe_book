@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_book/screens/recipe_detail.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -44,82 +45,97 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _RecipesCard(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        height: 100,
-        child: Card(
-          child: Row(
-            children: <Widget>[
-              Container(
-                height: 125,
-                width: 100,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.network(
-                    'https://upload.wikimedia.org/wikipedia/commons/7/7e/Silpancho_cochalo.jpg',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              SizedBox(width: 26),
-              Column(
-                // Ordenar de manera vertical
-                mainAxisAlignment: MainAxisAlignment.center,
-                // Alinear a la izquierda
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => RecipeDetail(
+              recipeName: 'Silpancho Cochabanbino',
+              recipeDescription: 'Delicious Bolivian dish with rice, potatoes, and meat.',
+              recipeImage: 'https://upload.wikimedia.org/wikipedia/commons/7/7e/Silpancho_cochalo.jpg',
+              recipeAuthor: 'Alison Menez',
+              recipeTime: '30 min',
+            ),
+          ),
+        );
+      },
+      //
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Container(width: MediaQuery.of(context).size.width,
+            height: 100,
+            child: Card(
+              child: Row(
                 children: <Widget>[
-                  Text(
-                    'Silpancho Cochabanbino',
-                    style: TextStyle(fontSize: 16, fontFamily: 'Quicksand',
-                        fontWeight: FontWeight.bold),
+                  Container(
+                    height: 125,
+                    width: 100,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.network(
+                        'https://upload.wikimedia.org/wikipedia/commons/7/7e/Silpancho_cochalo.jpg',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
-                  SizedBox(height: 8),
-                  // Autor
-                  Row(
+                  SizedBox(width: 26),
+                  Column(
+                    // Ordenar de manera vertical
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    // Alinear a la izquierda
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Icon(
-                        Icons.person,
-                        size: 16,
-                        color: Colors.blue[200],
-                      ),
-                      SizedBox(width: 4),
                       Text(
-                        'Alison Menez',
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontFamily: 'Quicksand',
-                          color: Colors.blue[200],
-                        ),
+                        'Silpancho Cochabanbino',
+                        style: TextStyle(fontSize: 16, fontFamily: 'Quicksand',
+                            fontWeight: FontWeight.bold),
                       ),
-                    ],
-                  ),
-                  // Tiempo
-                  SizedBox(height: 2),
-                  Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.access_time,
-                        size: 16,
-                        color: Colors.blue[200],
+                      SizedBox(height: 8),
+                      // Autor
+                      Row(
+                        children: <Widget>[
+                          Icon(
+                            Icons.person,
+                            size: 16,
+                            color: Colors.blue[200],
+                          ),
+                          SizedBox(width: 4),
+                          Text(
+                            'Alison Menez',
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontFamily: 'Quicksand',
+                              color: Colors.blue[200],
+                            ),
+                          ),
+                        ],
                       ),
-                      SizedBox(width: 4),
-                      Text(
-                        '30 min',
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontFamily: 'Quicksand',
-                          color: Colors.blue[200],
-                        ),
+                      // Tiempo
+                      SizedBox(height: 2),
+                      Row(
+                        children: <Widget>[
+                          Icon(
+                            Icons.access_time,
+                            size: 16,
+                            color: Colors.blue[200],
+                          ),
+                          SizedBox(width: 4),
+                          Text(
+                            '30 min',
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontFamily: 'Quicksand',
+                              color: Colors.blue[200],
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ],
               ),
-            ],
-          ),
-        ),
+            ),)
       ),
     );
   }
