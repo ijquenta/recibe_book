@@ -1,0 +1,94 @@
+{
+  "uuid": "1ecfed57-60d4-4874-840f-7a7670d597a5",
+  "lastMigration": 33,
+  "name": "Recipe book",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 5001,
+  "hostname": "localhost",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "20030983-9eef-497b-9753-889fd113254c",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "recipes",
+      "responses": [
+        {
+          "uuid": "668bd15c-ef70-4dad-95eb-6bfb6321af9a",
+          "body": "{\n  \"recipes\": [\n    {\n      \"name\": \"Salteñas\",\n      \"author\": \"Chef María Quispe\",\n      \"url\": \"https://imag.bonviveur.com/saltenas-bolivianas.jpg\",\n      \"description\": \"Empanadas jugosas rellenas de carne, papa, huevo y especias, horneadas con una masa ligeramente dulce.\",\n      \"time\": \"2 horas\"\n    },\n    {\n      \"name\": \"Sopa de Maní\",\n      \"author\": \"Chef Jorge Mamani\",\n      \"url\": \"https://i.imgur.com/GQzNiwm.jpeg\",\n      \"description\": \"Sopa cremosa hecha con maní tostado, carne de res, papas, arroz y verduras, servida con papas fritas encima.\",\n      \"time\": \"1 hora 30 minutos\"\n    },\n    {\n      \"name\": \"Pique Macho\",\n      \"author\": \"Chef Carla Fernández\",\n      \"url\": \"https://chipabythedozen.com/wp-content/uploads/2020/07/Pique-Macho-Bolivia.jpg\",\n      \"description\": \"Plato picante de carne, salchichas, papas fritas, cebolla, tomate y huevo duro, servido con salsas.\",\n      \"time\": \"1 hora\"\n    },\n    {\n      \"name\": \"Silpancho\",\n      \"author\": \"Chef Martín Rojas\",\n      \"url\": \"https://cdn.bolivia.com/gastronomia/2018/01/25/silpancho-boliviano-3574.jpg\",\n      \"description\": \"Base de arroz y papas con una milanesa de carne, huevo frito y ensalada de tomate y cebolla.\",\n      \"time\": \"1 hora\"\n    },\n    {\n      \"name\": \"Fricasé Paceño\",\n      \"author\": \"Chef Lucía Condori\",\n      \"url\": \"https://recetasbolivia.com/wp-content/uploads/fricase-paceno-500x497.jpg\",\n      \"description\": \"Guiso picante de carne de cerdo con mote, ají amarillo y especias, servido caliente con papas.\",\n      \"time\": \"1 hora 15 minutos\"\n    },\n    {\n      \"name\": \"Chairo Paceño\",\n      \"author\": \"Chef Rubén Nina\",\n      \"url\": \"https://boliviaesturismo.com/wp-content/uploads/2016/01/chairo.jpg\",\n      \"description\": \"Sopa espesa hecha con chuño, carne de res, charque, mote, papas y verduras andinas.\",\n      \"time\": \"2 horas\"\n    },\n    {\n      \"name\": \"Majadito Cruceño\",\n      \"author\": \"Chef Alejandra Rivero\",\n      \"url\": \"https://blog.amigofoods.com/wp-content/uploads/2025/02/bolivian-dish-majadito-720x720.jpg\",\n      \"description\": \"Arroz cocido con charque, verduras y urucú, acompañado con plátano y huevo frito.\",\n      \"time\": \"1 hora\"\n    },\n    {\n      \"name\": \"Anticuchos\",\n      \"author\": \"Chef Esteban Calle\",\n      \"url\": \"https://imag.bonviveur.com/servimos-los-anticuchos-con-las-patatas.jpg\",\n      \"description\": \"Brochetas de corazón de res marinado y asado, servidas con papas y salsa de maní.\",\n      \"time\": \"45 minutos\"\n    },\n    {\n      \"name\": \"Api con Pastel\",\n      \"author\": \"Chef Nancy Flores\",\n      \"url\": \"https://media.todojujuy.com/p/1b4e6bf5aafc38e9f2f1aaadd00af170/adjuntos/227/imagenes/003/342/0003342861/1200x675/smart/api-pastel.png\",\n      \"description\": \"Bebida caliente de maíz morado con especias, acompañada con pastel frito relleno de queso.\",\n      \"time\": \"1 hora\"\n    },\n    {\n      \"name\": \"Buñuelos con Miel de Caña\",\n      \"author\": \"Chef Rosario Méndez\",\n      \"url\": \"https://www.cochabamba2018.bo/wp-content/uploads/2024/07/bunuelos-bolivianos-1.jpg\",\n      \"description\": \"Deliciosos buñuelos esponjosos fritos, bañados con miel de caña caliente y aromática.\",\n      \"time\": \"1 hora\"\n    }\n  ]\n}\n",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "20030983-9eef-497b-9753-889fd113254c"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [],
+  "callbacks": []
+}
