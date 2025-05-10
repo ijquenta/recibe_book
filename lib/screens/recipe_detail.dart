@@ -1,5 +1,4 @@
 import 'dart:ui'; // Import for ImageFilter
-
 import 'package:flutter/material.dart';
 
 class RecipeDetail extends StatelessWidget {
@@ -58,7 +57,7 @@ class RecipeDetail extends StatelessWidget {
                   // Centered Image
                   Center( // This Center is still needed to center the image horizontally within the column
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(16.0), // Optional: Add rounded corners
+                      borderRadius: BorderRadius.circular(200.0), // Optional: Add rounded corners
                       child: Image.network(
                         recipeImage,
                         width: 300, // Adjust size as needed
@@ -79,7 +78,7 @@ class RecipeDetail extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(
+                        /*Text(
                           recipeName,
                           style: const TextStyle(
                             fontSize: 24,
@@ -87,9 +86,9 @@ class RecipeDetail extends StatelessWidget {
                             color: Colors.black, // Ensure text is visible on the background
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 10),*/
                         Text(
-                          '$recipeDescription',
+                          recipeDescription,
                           style: const TextStyle(
                             fontSize: 16,
                             color: Colors.black87, // Ensure text is visible
