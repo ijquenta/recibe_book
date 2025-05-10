@@ -67,12 +67,45 @@ class HomeScreen extends StatelessWidget {
                     style: TextStyle(fontSize: 16, fontFamily: 'Quicksand',
                         fontWeight: FontWeight.bold),
                   ),
-                  //Container(height: 2, width: 330, color: Colors.blue[200]),
                   SizedBox(height: 8),
-                  Text(
-                    'By Alison Menez',
-                    style: TextStyle(fontSize: 13, fontFamily: 'Quicksand',
-                        color: Colors.blue[200]),
+                  // Autor
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.person,
+                        size: 16,
+                        color: Colors.blue[200],
+                      ),
+                      SizedBox(width: 4),
+                      Text(
+                        'Alison Menez',
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontFamily: 'Quicksand',
+                          color: Colors.blue[200],
+                        ),
+                      ),
+                    ],
+                  ),
+                  // Tiempo
+                  SizedBox(height: 2),
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.access_time,
+                        size: 16,
+                        color: Colors.blue[200],
+                      ),
+                      SizedBox(width: 4),
+                      Text(
+                        '30 min',
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontFamily: 'Quicksand',
+                          color: Colors.blue[200],
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -110,6 +143,11 @@ class RecipeForm extends StatelessWidget {
             _buildTextField(
               label: 'Name',
               type: TextInputType.text,
+            ),
+            SizedBox(height: 10),
+            _buildTextField(
+              label: 'Description',
+              type: TextInputType.multiline,
             ),
           ],
         ),
