@@ -1,48 +1,48 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:recipe_book/models/recipe_model.dart';
+import 'package:recipe_book/providers/recipes_provider.dart';
 import 'package:recipe_book/screens/recipe_detail.dart';
-import 'package:http/http.dart' as http;
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
-  Future<List<dynamic>> FetchRecipes() async {
-    //final url = Uri.parse('http://10.0.2.2:5001/recipes'); desde emulador
-    final url = Uri.parse('http://0.0.0.0:5001/recipes'); // desde navegador
-    try {
-      final response = await http.get(url);
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        return data['recipes'];
-      } else {
-        return [];
-      }
-    } catch (e) {
-      return [];
-    }
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final recipesProvider = Provider.of<RecipesProvider>(
+        context,
+        listen: false,
+      );
+      recipesProvider.fetchRecipes();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<List<dynamic>>(
-        future: FetchRecipes(),
-        builder: (context, snapshot) {
-          final recipes = snapshot.data as List<dynamic>;
-          if (snapshot.connectionState == ConnectionState.waiting) {
+      body: Consumer<RecipesProvider>(
+        builder: (context, provider, child) {
+          // Validación
+          if (provider.isLoading) {
             return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (recipes.isEmpty) {
-            return Center(child: Text('No recipes found'));
+          } else if (provider.recipes.isEmpty) {
+            return const Center(child: Text('No recipes found'));
+          } else {
+            return ListView.builder(
+              itemCount: provider.recipes.length,
+              itemBuilder: (context, index) {
+                final recipe = provider.recipes[index];
+                return _RecipesCard(context, recipe);
+              },
+            );
           }
-          return ListView.builder(
-            itemCount: recipes.length,
-            itemBuilder: (context, index) {
-              return _RecipesCard(context, recipes[index]);
-            },
-          );
         },
       ),
       // Boton de agregar receta flotante
@@ -77,7 +77,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _RecipesCard(BuildContext context, dynamic recipe) {
+  Widget _RecipesCard(BuildContext context, Recipe recipe) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -85,16 +85,15 @@ class HomeScreen extends StatelessWidget {
           MaterialPageRoute(
             builder:
                 (context) => RecipeDetail(
-                  recipeName: recipe['name'],
-                  recipeDescription: recipe['description'],
-                  recipeImage: recipe['url'],
-                  recipeAuthor: recipe['author'],
-                  recipeTime: recipe['time'],
+                  recipeName: recipe.name,
+                  recipeDescription: recipe.description,
+                  recipeImage: recipe.image, // Usar siempre image
+                  recipeAuthor: recipe.author,
+                  recipeTime: recipe.time,
                 ),
           ),
         );
       },
-      //
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Container(
@@ -108,18 +107,19 @@ class HomeScreen extends StatelessWidget {
                   width: 100,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: Image.network(recipe['url'], fit: BoxFit.cover),
+                    child: Image.network(
+                      recipe.image,
+                      fit: BoxFit.cover,
+                    ), // Usar siempre image
                   ),
                 ),
                 SizedBox(width: 26),
                 Column(
-                  // Ordenar de manera vertical
                   mainAxisAlignment: MainAxisAlignment.center,
-                  // Alinear a la izquierda
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      recipe['name'],
+                      recipe.name,
                       style: TextStyle(
                         fontSize: 16,
                         fontFamily: 'Quicksand',
@@ -127,13 +127,12 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 8),
-                    // Autor
                     Row(
                       children: <Widget>[
                         Icon(Icons.person, size: 16, color: Colors.blue[200]),
                         SizedBox(width: 4),
                         Text(
-                          recipe['author'],
+                          recipe.author,
                           style: TextStyle(
                             fontSize: 13,
                             fontFamily: 'Quicksand',
@@ -142,7 +141,6 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    // Tiempo
                     SizedBox(height: 2),
                     Row(
                       children: <Widget>[
@@ -153,7 +151,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         SizedBox(width: 4),
                         Text(
-                          recipe['time'],
+                          recipe.time,
                           style: TextStyle(
                             fontSize: 13,
                             fontFamily: 'Quicksand',

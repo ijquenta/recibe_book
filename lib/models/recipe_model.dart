@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Recipe {
   String name;
   String description;
@@ -26,8 +24,14 @@ class Recipe {
       image: json['image'],
       author: json['author'],
       time: json['time'],
-      recipeSteps: List<String>.from(json['recipeSteps']),
-      ingredients: List<String>.from(json['ingredients']),
+      recipeSteps:
+          json['recipeSteps'] != null
+              ? List<String>.from(json['recipeSteps'])
+              : [],
+      ingredients:
+          json['ingredients'] != null
+              ? List<String>.from(json['ingredients'])
+              : [],
     );
   }
 

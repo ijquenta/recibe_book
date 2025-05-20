@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_book/providers/recipes_provider.dart';
 import 'package:recipe_book/screens/favorites_screen.dart';
 import 'package:recipe_book/screens/home_screen.dart';
 import 'package:recipe_book/screens/search_screen.dart';
@@ -17,15 +18,18 @@ class MyApp extends StatelessWidget {
       create: (context) => ThemeProvider(),
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, child) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Bolivian Recipe Book',
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
+          return MultiProvider(
+            providers: [
+              ChangeNotifierProvider(create: (context) => RecipesProvider()),
+            ],
+            child: MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Bolivian Recipe Book',
+              theme: ThemeData(primarySwatch: Colors.blue),
+              darkTheme: ThemeData.dark(),
+              themeMode: themeProvider.themeMode,
+              home: const RecipeBook(),
             ),
-            darkTheme: ThemeData.dark(),
-            themeMode: themeProvider.themeMode,
-            home: const RecipeBook(),
           );
         },
       ),
@@ -44,8 +48,8 @@ class RecipeBook extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.blue,
           title: Text(
-              'Bolivian Recipe Book 🇧🇴',
-              style: TextStyle(color: Colors.white)
+            'Bolivian Recipe Book 🇧🇴',
+            style: TextStyle(color: Colors.white),
           ),
           // TabBar en la parte superior
           bottom: TabBar(
@@ -56,17 +60,17 @@ class RecipeBook extends StatelessWidget {
               Tab(icon: Icon(Icons.home), text: 'Home'),
               Tab(icon: Icon(Icons.favorite), text: 'Favorites'),
               Tab(icon: Icon(Icons.search), text: 'Search'),
-              Tab(icon: Icon(Icons.settings), text: 'Settings')
+              Tab(icon: Icon(Icons.settings), text: 'Settings'),
             ],
           ),
         ),
         body: TabBarView(
-            children: [
-              HomeScreen(),
-              FavoritesScreen(),
-              SearchScreen(),
-              SettingScreen()
-            ]
+          children: [
+            HomeScreen(),
+            FavoritesScreen(),
+            SearchScreen(),
+            SettingScreen(),
+          ],
         ),
       ),
     );
